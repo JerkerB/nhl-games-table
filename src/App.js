@@ -8,7 +8,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get('https://statsapi.web.nhl.com/api/v1/schedule?startDate=2019-10-08&endDate=2019-10-21');
+      const response = await axios.get('https://statsapi.web.nhl.com/api/v1/schedule?startDate=2019-10-08&endDate=2019-10-27');
       const g = [];
       const d = [];
 
@@ -41,18 +41,21 @@ function App() {
         {dates.map(date => {
           return <th key={date}>{date}</th>;
         })}
+        <th>TOTAL GAMES</th>
       </tr>
     );
   };
 
   const renderGameRows = () => {
     return TEAMS.map((team, index) => {
+      const totalGamesForTeam = games[index].filter(Boolean).length;
       return (
         <tr>
           <td>{team.shortName}</td>
           {games[index].map(game => (
             <td key={game.gamePk}>{game.against}</td>
           ))}
+          <td>{totalGamesForTeam}</td>
         </tr>
       );
     });
