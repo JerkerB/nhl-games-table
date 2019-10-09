@@ -25,8 +25,8 @@ function App() {
         date.games.forEach(game => {
           const homeTeamIndex = TEAMS.findIndex(team => team.id === game.teams.home.team.id);
           const awayTeamIndex = TEAMS.findIndex(team => team.id === game.teams.away.team.id);
-          g[homeTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[awayTeamIndex].shortName };
-          g[awayTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[homeTeamIndex].shortName };
+          g[homeTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[awayTeamIndex].logo };
+          g[awayTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[homeTeamIndex].logo };
         });
       });
       setGames(g);
