@@ -34,32 +34,29 @@ function App() {
     })();
   }, []);
 
-  const renderHeaderRow = () => {
-    return (
-      <tr>
-        <th>TEAM</th>
-        {dates.map(date => {
-          return <th key={date}>{date}</th>;
-        })}
-        <th>TOTAL GAMES</th>
-      </tr>
-    );
-  };
+  const renderHeaderRow = () => (
+    <tr>
+      <th>TEAM</th>
+      {dates.map(date => {
+        return <th key={date}>{date}</th>;
+      })}
+      <th>GAMES</th>
+    </tr>
+  );
 
-  const renderGameRows = () => {
-    return TEAMS.map((team, index) => {
-      const totalGamesForTeam = games[index].filter(Boolean).length;
+  const renderGameRows = () =>
+    TEAMS.map((team, teamIndex) => {
+      const totalGamesForTeam = games[teamIndex].filter(Boolean).length;
       return (
-        <tr>
-          <td>{team.shortName}</td>
-          {games[index].map(game => (
-            <td key={game.gamePk}>{game.against}</td>
-          ))}
+        <tr key={team.id}>
+          <td>{team.logo}</td>
+          {games[teamIndex].map((game, gameIndex) => {
+            return <td key={`${teamIndex}${gameIndex}`}>{game.against}</td>;
+          })}
           <td>{totalGamesForTeam}</td>
         </tr>
       );
     });
-  };
 
   if (games.length > 0) {
     return (
