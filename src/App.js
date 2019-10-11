@@ -34,10 +34,12 @@ function App() {
         d.push(moment(date.date).format('MMM Do'));
 
         date.games.forEach(game => {
-          const homeTeamIndex = TEAMS.findIndex(team => team.id === game.teams.home.team.id);
-          const awayTeamIndex = TEAMS.findIndex(team => team.id === game.teams.away.team.id);
-          g[homeTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[awayTeamIndex].logo };
-          g[awayTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[homeTeamIndex].logo };
+          const homeTeamId = game.teams.home.team.id;
+          const awayTeamId = game.teams.away.team.id;
+          const homeTeamIndex = TEAMS.findIndex(team => team.id === homeTeamId);
+          const awayTeamIndex = TEAMS.findIndex(team => team.id === awayTeamId);
+          g[homeTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[awayTeamIndex].logo, isAway: false };
+          g[awayTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[homeTeamIndex].logo, isAway: true };
         });
       });
       setGames(g);
@@ -62,7 +64,12 @@ function App() {
         <tr key={team.id}>
           <td>{team.logo}</td>
           {games[teamIndex].map((game, gameIndex) => {
-            return <td key={`${teamIndex}${gameIndex}`}>{game.against}</td>;
+            return (
+              <td className="against" key={`${teamIndex}${gameIndex}`}>
+                <span>{game.isAway ? '@ ' : ''}</span>
+                <span className="against-logo">{game.against}</span>
+              </td>
+            );
           })}
           <td>{totalGamesForTeam}</td>
         </tr>

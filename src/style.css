@@ -45,3 +45,13 @@ th {
   background-color: black;
   color: white;
 }
+
+.against {
+  font-weight: bold;
+  text-align: center;
+  height: 50px;
+}
+
+.against-logo {
+  width: 30px;
+}
