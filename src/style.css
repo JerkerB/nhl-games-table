@@ -15,3 +15,33 @@
   border-top-right-radius: 50% !important;
   border-bottom-right-radius: 50% !important;
 }
+
+table {
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+}
+
+tr td:first-child,
+td:last-child {
+  text-align: center;
+  background-color: rgb(118, 118, 129);
+  color: white;
+}
+
+td,
+th {
+  width: 50px;
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: black;
+  color: white;
+}

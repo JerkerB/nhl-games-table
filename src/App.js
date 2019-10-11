@@ -31,7 +31,7 @@ function App() {
       }
 
       response.data.dates.forEach((date, dateIndex) => {
-        d.push(date.date);
+        d.push(moment(date.date).format('MMM Do'));
 
         date.games.forEach(game => {
           const homeTeamIndex = TEAMS.findIndex(team => team.id === game.teams.home.team.id);
