@@ -16,42 +16,48 @@
   border-bottom-right-radius: 50% !important;
 }
 
-table {
+body,
+html {
   font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-}
-
-tr td:first-child,
-td:last-child {
-  text-align: center;
-  background-color: rgb(118, 118, 129);
-  color: white;
-}
-
-td,
-th {
-  width: 50px;
-  border: 1px solid #ddd;
-  padding: 15px;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  background-color: black;
-  color: white;
 }
 
 .against {
-  font-weight: bold;
-  text-align: center;
-  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.against-logo {
-  width: 30px;
+.logo {
+  flex: 0 0 50px;
+}
+
+.game-grid {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.grid-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.grid-row > div {
+  flex: 0 0 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  border: 1px solid grey;
+}
+
+.grid-row:nth-child(even) > div {
+  background-color: #f2f2f2;
+}
+
+.header-item {
+  background-color: black;
+  color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }

@@ -48,31 +48,37 @@ function App() {
   }, [from, to]);
 
   const renderHeaderRow = () => (
-    <tr>
-      <th>TEAM</th>
+    <div className="grid-row">
+      <div className="header-item">TEAM</div>
       {dates.map(date => {
-        return <th key={date}>{date}</th>;
+        return (
+          <div key={date} className="header-item">
+            {date}
+          </div>
+        );
       })}
-      <th>GAMES</th>
-    </tr>
+      <div className="header-item">GAMES</div>
+    </div>
   );
 
   const renderGameRows = () =>
     TEAMS.map((team, teamIndex) => {
       const totalGamesForTeam = games[teamIndex].filter(Boolean).length;
       return (
-        <tr key={team.id}>
-          <td>{team.logo}</td>
+        <div className="grid-row" key={team.id}>
+          <div>
+            <span className="logo">{team.logo}</span>
+          </div>
           {games[teamIndex].map((game, gameIndex) => {
             return (
-              <td className="against" key={`${teamIndex}${gameIndex}`}>
+              <div className="against" key={`${teamIndex}${gameIndex}`}>
                 <span>{game.isAway ? '@ ' : ''}</span>
-                <span className="against-logo">{game.against}</span>
-              </td>
+                <span className="logo">{game.against}</span>
+              </div>
             );
           })}
-          <td>{totalGamesForTeam}</td>
-        </tr>
+          <div>{totalGamesForTeam}</div>
+        </div>
       );
     });
 
@@ -131,10 +137,10 @@ function App() {
               }}
             />
           </div>
-          <table>
-            <thead>{renderHeaderRow()}</thead>
-            <tbody>{renderGameRows()}</tbody>
-          </table>
+          <div className="game-grid">
+            {renderHeaderRow()}
+            {renderGameRows()}
+          </div>
         </div>
       </div>
     );
