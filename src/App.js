@@ -120,7 +120,7 @@ function App() {
                 onDayClick: () => toEl.current.getInput().focus()
               }}
             />
-            {' - '}
+            {' — '}
             <DayPickerInput
               ref={toEl}
               value={toDate}
