@@ -20,30 +20,30 @@ function App() {
   useEffect(() => {
     (async () => {
       const response = await axios.get(`https://statsapi.web.nhl.com/api/v1/schedule?startDate=${from}&endDate=${to}`);
-      const g = [];
-      const d = [];
+      const tempTeams = [];
+      const tempDates = [];
 
-      for (let i = 0; i < TEAMS.length; i++) {
-        g[i] = [];
+      TEAMS.forEach((team, index) => {
+        tempTeams.push({ ...team, games: [] });
         for (let j = 0; j < response.data.dates.length; j++) {
-          g[i][j] = '';
+          tempTeams[index].games[j] = undefined;
         }
-      }
+      });
 
       response.data.dates.forEach((date, dateIndex) => {
-        d.push(moment(date.date).format('MMM Do'));
-
+        tempDates.push(moment(date.date).format('MMM Do'));
         date.games.forEach(game => {
           const homeTeamId = game.teams.home.team.id;
           const awayTeamId = game.teams.away.team.id;
-          const homeTeamIndex = TEAMS.findIndex(team => team.id === homeTeamId);
-          const awayTeamIndex = TEAMS.findIndex(team => team.id === awayTeamId);
-          g[homeTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[awayTeamIndex].logo, isAway: false };
-          g[awayTeamIndex][dateIndex] = { gamePk: game.gamePk, against: TEAMS[homeTeamIndex].logo, isAway: true };
+          const homeTeam = tempTeams.find(team => team.id === homeTeamId);
+          const awayTeam = tempTeams.find(team => team.id === awayTeamId);
+          homeTeam.games[dateIndex] = { against: awayTeam, isAway: false };
+          awayTeam.games[dateIndex] = { against: homeTeam, isAway: true };
         });
       });
-      setGames(g);
-      setDates(d);
+
+      setGames(tempTeams);
+      setDates(tempDates);
     })();
   }, [from, to]);
 
@@ -61,21 +61,24 @@ function App() {
     </div>
   );
 
-  const renderGameRows = () =>
-    TEAMS.map((team, teamIndex) => {
-      const totalGamesForTeam = games[teamIndex].filter(Boolean).length;
+  const renderTeamRows = () =>
+    games.map((team, teamIndex) => {
+      const totalGamesForTeam = team.games.filter(Boolean).length;
       return (
         <div className="grid-row" key={team.id}>
           <div>
             <span className="logo">{team.logo}</span>
           </div>
-          {games[teamIndex].map((game, gameIndex) => {
-            return (
-              <div className="against" key={`${teamIndex}${gameIndex}`}>
-                <span>{game.isAway ? '@ ' : ''}</span>
-                <span className="logo">{game.against}</span>
-              </div>
-            );
+          {team.games.map((game, gameIndex) => {
+            if (game) {
+              return (
+                <div key={`${teamIndex}${gameIndex}`}>
+                  <span>{game.isAway ? '@ ' : ''}</span>
+                  <span className="logo">{game.against ? game.against.logo : ''}</span>
+                </div>
+              );
+            }
+            return <div key={`${teamIndex}${gameIndex}`} />;
           })}
           <div>{totalGamesForTeam}</div>
         </div>
@@ -139,7 +142,7 @@ function App() {
           </div>
           <div className="game-grid">
             {renderHeaderRow()}
-            {renderGameRows()}
+            {renderTeamRows()}
           </div>
         </div>
       </div>

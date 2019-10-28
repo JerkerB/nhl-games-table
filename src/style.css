@@ -3,12 +3,6 @@ html {
   font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
 
-.against {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .logo {
   flex: 0 0 50px;
 }
