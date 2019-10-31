@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { formatDate, parseDate } from 'react-day-picker/moment';
+import DateRange from './DateRange';
 import TEAMS from './teams';
-
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import 'react-day-picker/lib/style.css';
 import './style.css';
 
 function App() {
-  const toEl = useRef(null);
   const today = moment();
   const weekFromNow = moment().add(7, 'days');
   const [from, setFrom] = useState(today.format('YYYY-MM-DD'));
@@ -101,45 +97,13 @@ function App() {
 
   const toDate = moment(to).toDate();
   const fromDate = moment(from).toDate();
-  const modifiers = { start: fromDate, end: toDate };
 
   if (games.length > 0) {
     return (
       <div>
         <h1>NHL Schedule</h1>
         <div>
-          <div>
-            <DayPickerInput
-              value={fromDate}
-              format="LL"
-              formatDate={formatDate}
-              parseDate={parseDate}
-              onDayChange={handleFromChange}
-              dayPickerProps={{
-                selectedDays: [fromDate, { from: fromDate, to: toDate }],
-                disabledDays: { after: toDate },
-                toMonth: toDate,
-                modifiers,
-                onDayClick: () => toEl.current.getInput().focus()
-              }}
-            />
-            {' — '}
-            <DayPickerInput
-              ref={toEl}
-              value={toDate}
-              format="LL"
-              formatDate={formatDate}
-              parseDate={parseDate}
-              onDayChange={handleToChange}
-              dayPickerProps={{
-                selectedDays: [fromDate, { from: fromDate, to: toDate }],
-                disabledDays: { before: fromDate },
-                modifiers,
-                month: fromDate,
-                fromMonth: fromDate
-              }}
-            />
-          </div>
+          <DateRange fromDate={fromDate} toDate={toDate} onFromDayChange={handleFromChange} onToDayChange={handleToChange} />
           <div className="game-grid">
             {renderHeaderRow()}
             {renderTeamRows()}
