@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import DateRange from './DateRange';
+import GameGrid from './GameGrid';
 import TEAMS from './teams';
 import './style.css';
 
@@ -43,44 +44,6 @@ function App() {
     })();
   }, [from, to]);
 
-  const renderHeaderRow = () => (
-    <div className="grid-row">
-      <div className="header-item">TEAM</div>
-      {dates.map(date => {
-        return (
-          <div key={date} className="header-item">
-            {date}
-          </div>
-        );
-      })}
-      <div className="header-item">GAMES</div>
-    </div>
-  );
-
-  const renderTeamRows = () =>
-    games.map((team, teamIndex) => {
-      const totalGamesForTeam = team.games.filter(Boolean).length;
-      return (
-        <div className="grid-row" key={team.id}>
-          <div>
-            <span className="logo">{team.logo}</span>
-          </div>
-          {team.games.map((game, gameIndex) => {
-            if (game) {
-              return (
-                <div key={`${teamIndex}${gameIndex}`}>
-                  <span>{game.isAway ? '@ ' : ''}</span>
-                  <span className="logo">{game.against ? game.against.logo : ''}</span>
-                </div>
-              );
-            }
-            return <div key={`${teamIndex}${gameIndex}`} />;
-          })}
-          <div>{totalGamesForTeam}</div>
-        </div>
-      );
-    });
-
   const handleFromChange = day => {
     const newFrom = moment(day).format('YYYY-MM-DD');
     if (moment(newFrom).isBefore(to)) {
@@ -104,10 +67,7 @@ function App() {
         <h1>NHL Schedule</h1>
         <div>
           <DateRange fromDate={fromDate} toDate={toDate} onFromDayChange={handleFromChange} onToDayChange={handleToChange} />
-          <div className="game-grid">
-            {renderHeaderRow()}
-            {renderTeamRows()}
-          </div>
+          <GameGrid games={games} dates={dates} />
         </div>
       </div>
     );
