@@ -45,6 +45,7 @@ function App() {
   }, [from, to]);
 
   const handleFromChange = day => {
+    setGames([]);
     const newFrom = moment(day).format('YYYY-MM-DD');
     if (moment(newFrom).isBefore(to)) {
       setFrom(newFrom);
@@ -52,6 +53,7 @@ function App() {
   };
 
   const handleToChange = day => {
+    setGames([]);
     const newTo = moment(day).format('YYYY-MM-DD');
     if (moment(newTo).isAfter(from)) {
       setTo(newTo);
@@ -60,20 +62,23 @@ function App() {
 
   const toDate = moment(to).toDate();
   const fromDate = moment(from).toDate();
+  let gameContent = <div className="spinner" />;
 
   if (games.length > 0) {
-    return (
-      <div>
-        <h1>NHL Schedule</h1>
-        <div>
-          <DateRange fromDate={fromDate} toDate={toDate} onFromDayChange={handleFromChange} onToDayChange={handleToChange} />
-          <GameGrid games={games} dates={dates} />
-        </div>
-      </div>
-    );
+    gameContent = <GameGrid games={games} dates={dates} />;
   }
 
-  return <div>No games</div>;
+  return (
+    <div>
+      <h1>NHL Schedule</h1>
+      <div>
+        <DateRange fromDate={fromDate} toDate={toDate} onFromDayChange={handleFromChange} onToDayChange={handleToChange} />
+        <div className="game-content">
+          {gameContent}
+        </div>
+      </div>
+    </div>
+  );;
 }
 
 export default App;
