@@ -7,10 +7,11 @@ import TEAMS from './teams';
 import './style.css';
 
 function App() {
+  const DAY_FORMAT = 'YYYY-MM-DD';
   const today = moment();
   const weekFromNow = moment().add(7, 'days');
-  const [from, setFrom] = useState(today.format('YYYY-MM-DD'));
-  const [to, setTo] = useState(weekFromNow.format('YYYY-MM-DD'));
+  const [from, setFrom] = useState(today.format(DAY_FORMAT));
+  const [to, setTo] = useState(weekFromNow.format(DAY_FORMAT));
   const [games, setGames] = useState([]);
   const [dates, setDates] = useState([]);
 
@@ -46,7 +47,7 @@ function App() {
 
   const handleFromChange = day => {
     setGames([]);
-    const newFrom = moment(day).format('YYYY-MM-DD');
+    const newFrom = moment(day).format(DAY_FORMAT);
     if (moment(newFrom).isBefore(to)) {
       setFrom(newFrom);
     }
@@ -54,7 +55,7 @@ function App() {
 
   const handleToChange = day => {
     setGames([]);
-    const newTo = moment(day).format('YYYY-MM-DD');
+    const newTo = moment(day).format(DAY_FORMAT);
     if (moment(newTo).isAfter(from)) {
       setTo(newTo);
     }
