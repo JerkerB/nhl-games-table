@@ -1,6 +1,6 @@
 # nhl-schedule
 
-Simple app for showing nhl schedule for given date range.
+Simple app for showing nhl schedule for given date range. Live demo running at https://jerkerb.github.io/nhl-schedule/.
 
 ![](example.png)
 
