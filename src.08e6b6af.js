@@ -189,4 +189,4 @@ var r=require("./lib/src/DayPickerInput");module.exports=r;
 },{"react":"n8MK","axios":"dZBD","moment":"a2Bw","./DateRange":"fT2m","./GameGrid":"e8ZC","./teams":"ivtE","./style.css":"uGyY"}],"Focm":[function(require,module,exports) {
 "use strict";var e=u(require("react")),r=u(require("react-dom")),t=u(require("./App"));function u(e){return e&&e.__esModule?e:{default:e}}r.default.render(e.default.createElement(t.default,null),document.getElementById("root"));
 },{"react":"n8MK","react-dom":"NKHc","./App":"lY9v"}]},{},["Focm"], null)
-//# sourceMappingURL=/src.08e6b6af.js.map
+//# sourceMappingURL=src.08e6b6af.js.map
