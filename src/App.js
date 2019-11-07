@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import moment from 'moment';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 import DateRange from './DateRange';
 import GameGrid from './GameGrid';
 import TEAMS from './teams';
 import './style.css';
+
+const moment = extendMoment(Moment);
 
 function App() {
   const DAY_FORMAT = 'YYYY-MM-DD';
@@ -19,17 +22,18 @@ function App() {
     (async () => {
       const response = await axios.get(`https://statsapi.web.nhl.com/api/v1/schedule?startDate=${from}&endDate=${to}`);
       const tempTeams = [];
-      const tempDates = [];
+      const dateRange = Array.from(moment.range(from, to).by('days'));
+      const tempDates = dateRange.map(date => date.format(DAY_FORMAT));
 
       TEAMS.forEach((team, index) => {
         tempTeams.push({ ...team, games: [] });
-        for (let j = 0; j < response.data.dates.length; j++) {
-          tempTeams[index].games[j] = undefined;
+        for (let j = 0; j < dateRange.length; j++) {
+          tempTeams[index].games[j] = '';
         }
       });
 
-      response.data.dates.forEach((date, dateIndex) => {
-        tempDates.push(moment(date.date).format('MMM Do'));
+      response.data.dates.forEach(date => {
+        const dateIndex = tempDates.indexOf(date.date);
         date.games.forEach(game => {
           const homeTeamId = game.teams.home.team.id;
           const awayTeamId = game.teams.away.team.id;
@@ -40,8 +44,8 @@ function App() {
         });
       });
 
+      setDates(dateRange.map(day => day.format('MMM Do')));
       setGames(tempTeams);
-      setDates(tempDates);
     })();
   }, [from, to]);
 
@@ -74,12 +78,10 @@ function App() {
       <h1>NHL Schedule</h1>
       <div>
         <DateRange fromDate={fromDate} toDate={toDate} onFromDayChange={handleFromChange} onToDayChange={handleToChange} />
-        <div className="game-content">
-          {gameContent}
-        </div>
+        <div className="game-content">{gameContent}</div>
       </div>
     </div>
-  );;
+  );
 }
 
 export default App;
