@@ -1,6 +1,6 @@
 # nhl-schedule-grid
 
-Simple app for showing nhl schedule grid for given date range. Live [demo](https://jerkerb.github.io/nhl-schedule/).
+Simple app for showing nhl schedule grid for given date range. Live [demo](https://jerkerb.github.io/nhl-schedule-grid/).
 
 ![](example.png)
 
