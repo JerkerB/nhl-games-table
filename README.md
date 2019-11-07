@@ -7,12 +7,15 @@ Simple app for showing nhl schedule grid for given date range. Live [demo](https
 ## Getting Started
 
 To run this project, install it locally with npm or yarn:
+
 ```
-git clone git@github.com:JerkerB/nhl-schedule.git
+git clone git@github.com:JerkerB/nhl-schedule-grid.git
 yarn install
 yarn start
 ```
+
 To build for production use:
+
 ```
 yarn build
 ```
