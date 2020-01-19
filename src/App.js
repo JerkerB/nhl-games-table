@@ -39,8 +39,10 @@ function App() {
           const awayTeamId = game.teams.away.team.id;
           const homeTeam = tempTeams.find(team => team.id === homeTeamId);
           const awayTeam = tempTeams.find(team => team.id === awayTeamId);
-          homeTeam.games[dateIndex] = { against: awayTeam, isAway: false };
-          awayTeam.games[dateIndex] = { against: homeTeam, isAway: true };
+          if (homeTeam && awayTeam) {
+            homeTeam.games[dateIndex] = { against: awayTeam, isAway: false };
+            awayTeam.games[dateIndex] = { against: homeTeam, isAway: true };
+          }
         });
       });
 
